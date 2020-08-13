@@ -5,11 +5,11 @@ import { Icon } from 'react-native-elements';
 // import { RecipeModal, ItemModal } from './AdderModals.js';
 
 const styles = StyleSheet.create({
-  container: {
+  toolbar: {
     position: 'absolute',
     left: 0,
     bottom: 0,
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
     marginTop: 1,
     shadowRadius: 2,
@@ -39,19 +39,21 @@ const styles = StyleSheet.create({
 
 export default function Toolbar(props) {
   return (
-    <View style={styles.container}>
-      <View style={styles.iconWrapper}>
-        <Icon name="th-list" type="font-awesome-5" />
-      </View>
-      <View style={styles.iconWrapper}>
-        <Icon name="calculator" type="font-awesome-5" />
-      </View>
-      <View style={styles.iconWrapper}>
-        <Icon name="apple-alt" type="font-awesome-5" />
-      </View>
-      {/* <TouchableWithoutFeedback id="calculatorButton" style={styles.selectButton} onPress={props.handleShowCalculator} /> */}
-      {/* <TouchableWithoutFeedback id="adderButton" style={styles.selectButton} onPress={props.handleShowAdder}/>
+
+      <View style={styles.toolbar}>
+        <View style={styles.iconWrapper}>
+          <Icon name="th-list" type="font-awesome-5" />
+        </View>
+        <View style={styles.iconWrapper}>
+          <Icon name="calculator" type="font-awesome-5" />
+        </View>
+        <View style={styles.iconWrapper}>
+          <Icon name="apple-alt" type="font-awesome-5" />
+        </View>
+        {/* <TouchableWithoutFeedback id="calculatorButton" style={styles.selectButton} onPress={props.handleShowCalculator} /> */}
+        {/* <TouchableWithoutFeedback id="adderButton" style={styles.selectButton} onPress={props.handleShowAdder}/>
       <TouchableWithoutFeedback id="databaseButton" style={styles.selectButton} onPress={props.handleShowDatabase}/> */}
-    </View>
+      </View>
+
   )
 }

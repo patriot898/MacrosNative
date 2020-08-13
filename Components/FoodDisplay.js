@@ -1,24 +1,34 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Header } from 'react-native-elements';
 
-const checkRecipe = (recipe, type) => {
+
+const checkRecipe = (recipe, idx, type) => {
   if (recipe.type === type) {
-    return (<View><Text style={styles.recipeName}>{recipe.name}</Text></View>);
+    return (<View key={idx}><Text style ={styles.recipeName}>{recipe.name}</Text></View>);
   }
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    paddingTop: 40,
+    paddingLeft: 5,
+    paddingRight: 5,
+    marginBottom: 70,
+
 
   },
   recipe: {
 
   },
-  header: {
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
 
   },
   displayBlock: {
+    marginBottom: 10,
 
   },
   recipeName: {
@@ -31,46 +41,48 @@ const styles = StyleSheet.create({
 });
 
 
-const Wrapper = styled.div `
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 0 18px rgba(0, 0, 0, .15);
-  width: fit-content;
-  border: 1px solid #ccc;
-  padding: 1em;
-  margin-left: 3em;
-  display: ${ (props) => props.show ? 'inline-block' : 'none'} ;
-`;
+// const Wrapper = styled.div `
+//   background: #fff;
+//   border-radius: 4px;
+//   box-shadow: 0 0 18px rgba(0, 0, 0, .15);
+//   width: fit-content;
+//   border: 1px solid #ccc;
+//   padding: 1em;
+//   margin-left: 3em;
+//   display: ${ (props) => props.show ? 'inline-block' : 'none'} ;
+// `;
 
 
-const DisplayBlock = styled.div`
-  display: inline-block;
-  padding: 1.5em;
-  vertical-align: top;
-`
+// const DisplayBlock = styled.div`
+//   display: inline-block;
+//   padding: 1.5em;
+//   vertical-align: top;
+// `
 
 
 
-const FoodDisplay = ( {recipes, show} ) => {
+const FoodDisplay = ({ recipes, show }) => {
   return (
-    <View style={styles.container} show={show}>
-      <View style={styles.displayBlock}>
-        <Header style={styles.header} id="mains">Main Courses</Header>
-        {recipes.map((recipe) => checkRecipe(recipe, 'main'))}
+    <ScrollView style={styles.container}>
+      <View style={styles.container} show={show}>
+        <View style={styles.displayBlock}>
+          <Text style={styles.sectionTitle} id="mains">Main Courses</Text>
+          {recipes.map((recipe, idx) => checkRecipe(recipe, idx, 'main'))}
+        </View>
+        <View style={styles.displayBlock}>
+          <Text style={styles.sectionTitle} id="shakes">Shakes</Text>
+          {recipes.map((recipe, idx) => checkRecipe(recipe, idx, 'shake'))}
+        </View>
+        <View style={styles.displayBlock}>
+          <Text style={styles.sectionTitle} id="sides">Sides</Text>
+          {recipes.map((recipe, idx) => checkRecipe(recipe, idx, 'side'))}
+        </View>
+        <View style={styles.displayBlock}>
+          <Text style={styles.sectionTitle} id="snacks">Snacks</Text>
+          {recipes.map((recipe, idx) => checkRecipe(recipe, idx, 'snack'))}
+        </View>
       </View>
-      <View style={styles.displayBlock}>
-        <Header style={styles.header} id="shakes">Shakes</Header>
-        {recipes.map((recipe) => checkRecipe(recipe, 'shake'))}
-      </View>
-      <View style={styles.displayBlock}>
-        <Header style={styles.header} id="sides">Sides</Header>
-        {recipes.map((recipe) => checkRecipe(recipe, 'side'))}
-      </View>
-      <View style={styles.displayBlock}>
-        <Header style={styles.header} id="snacks">Snacks</Header>
-        {recipes.map((recipe) => checkRecipe(recipe, 'snack'))}
-      </View>
-    </View>
+    </ScrollView>
   )
 }
 
