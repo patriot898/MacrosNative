@@ -21,7 +21,11 @@ const styles = StyleSheet.create({
     elevation: 2,
     shadowOpacity: 0.4,
   },
-  selectButton: {
+  selected: {
+
+  },
+  unselected: {
+    color: 'pink',
 
   },
   iconWrapper: {
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
     height: 70,
     paddingBottom: 20,
     paddingTop: 20,
-    backgroundColor: 'rgba(213, 216, 55, .90)',
+    backgroundColor: 'white',
     // borderTopColor: 'gray',
     // borderTopWidth: 1,
 
@@ -37,22 +41,18 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function Toolbar(props) {
+export default function Toolbar({ selected, setSelected }) {
   return (
-
       <View style={styles.toolbar}>
         <View style={styles.iconWrapper}>
-          <Icon name="th-list" type="font-awesome-5" />
+          <Icon iconStyle={selected === 0 ? styles.selected : styles.unselected} name="th-list" type="font-awesome-5" onPress={() => setSelected(0)} />
         </View>
         <View style={styles.iconWrapper}>
-          <Icon name="calculator" type="font-awesome-5" />
+          <Icon iconStyle={selected === 1 ? styles.selected : styles.unselected} name="calculator" type="font-awesome-5" onPress={() => setSelected(1)}/>
         </View>
         <View style={styles.iconWrapper}>
-          <Icon name="apple-alt" type="font-awesome-5" />
+          <Icon iconStyle={selected === 2 ? styles.selected : styles.unselected} name="apple-alt" type="font-awesome-5" onPress={() => setSelected(2)}/>
         </View>
-        {/* <TouchableWithoutFeedback id="calculatorButton" style={styles.selectButton} onPress={props.handleShowCalculator} /> */}
-        {/* <TouchableWithoutFeedback id="adderButton" style={styles.selectButton} onPress={props.handleShowAdder}/>
-      <TouchableWithoutFeedback id="databaseButton" style={styles.selectButton} onPress={props.handleShowDatabase}/> */}
       </View>
 
   )
