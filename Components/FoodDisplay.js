@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Header } from 'react-native-elements';
+import FoodCategoryBlock from './FoodCategoryBlock.js';
 
 
 const checkRecipe = (recipe, idx, type) => {
@@ -17,9 +18,6 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     marginBottom: 70,
 
-
-  },
-  recipe: {
 
   },
   sectionTitle: {
@@ -61,27 +59,13 @@ const styles = StyleSheet.create({
 
 
 
-const FoodDisplay = ({ recipes, show }) => {
+const FoodDisplay = ({ recipes }) => {
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.container} show={show}>
-        <View style={styles.displayBlock}>
-          <Text style={styles.sectionTitle} id="mains">Main Courses</Text>
-          {recipes.map((recipe, idx) => checkRecipe(recipe, idx, 'main'))}
-        </View>
-        <View style={styles.displayBlock}>
-          <Text style={styles.sectionTitle} id="shakes">Shakes</Text>
-          {recipes.map((recipe, idx) => checkRecipe(recipe, idx, 'shake'))}
-        </View>
-        <View style={styles.displayBlock}>
-          <Text style={styles.sectionTitle} id="sides">Sides</Text>
-          {recipes.map((recipe, idx) => checkRecipe(recipe, idx, 'side'))}
-        </View>
-        <View style={styles.displayBlock}>
-          <Text style={styles.sectionTitle} id="snacks">Snacks</Text>
-          {recipes.map((recipe, idx) => checkRecipe(recipe, idx, 'snack'))}
-        </View>
-      </View>
+      <FoodCategoryBlock recipes={recipes} type="main" title="Main Courses" />
+      <FoodCategoryBlock recipes={recipes} type="shake" title="Shakes" />
+      <FoodCategoryBlock recipes={recipes} type="side" title="Sides" />
+      <FoodCategoryBlock recipes={recipes} type="snack" title="Snacks" />
     </ScrollView>
   )
 }
