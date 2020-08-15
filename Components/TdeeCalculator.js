@@ -3,12 +3,11 @@ import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-nativ
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const styles = StyleSheet.create({
-  calcContainer: { //div, passes in a 'show' prop for display attr
+  container: { //div, passes in a 'show' prop for display attr
     flex: 1,
-    backgroundColor: '#fafafa',
-    marginBottom: 30
-
-    // padding: '15%',
+    paddingLeft: 5,
+    paddingRight: 5,
+    marginBottom: 70,
   },
   exerciseWrapper: { //view
     paddingBottom: '5%',
@@ -97,7 +96,7 @@ export default class TdeeCalculator extends React.Component {
 
   render() {
     return (
-      <View show={this.props.show} style={styles.calcContainer}>
+      <View style={styles.container}>
         <View style={styles.calcForm}>
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Weight (lbs)</Text>
@@ -131,7 +130,7 @@ export default class TdeeCalculator extends React.Component {
               ]}
               defaultValue={this.state.exerciseLevel}
               dropDownStyle={{ backgroundColor: 'red', zIndex: 300 }}
-              containerStyle={{height: 30}}
+              containerStyle={{ height: 30 }}
               onChangeItem={item => this.setState({
                 exerciseLevel: item.value
               })} />
@@ -146,8 +145,8 @@ export default class TdeeCalculator extends React.Component {
                 { label: 'Bulk', value: '1.2' }
               ]}
               defaultValue={this.state.goal}
-              dropDownStyle={{backgroundColor: 'red', zIndex: 300}}
-              containerStyle={{height: 30}}
+              dropDownStyle={{ backgroundColor: 'red', zIndex: 300 }}
+              containerStyle={{ height: 30 }}
               onChangeItem={item => this.setState({
                 goal: item.value
               })} />

@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Header } from 'react-native-elements';
 
 const checkRecipe = (recipe, idx, type) => {
   if (recipe.type === type) {
@@ -22,7 +21,6 @@ const styles = StyleSheet.create({
 
   }
 });
-
 
 const FoodCategoryBlock = ({ recipes, type, title }) => {
   return (

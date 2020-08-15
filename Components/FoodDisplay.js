@@ -1,41 +1,35 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { Header } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import FoodCategoryBlock from './FoodCategoryBlock.js';
+import AddRecipeButton from './AddRecipeButton';
 
 
 const checkRecipe = (recipe, idx, type) => {
   if (recipe.type === type) {
-    return (<View key={idx}><Text style ={styles.recipeName}>{recipe.name}</Text></View>);
+    return (<View key={idx}><Text style={styles.recipeName}>{recipe.name}</Text></View>);
   }
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
     paddingLeft: 5,
     paddingRight: 5,
     marginBottom: 70,
-
+  },
+  topRightButton: {
+    flex: 0,
+    position: 'absolute',
+    top: 60,
+    right: 30,
 
   },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
+  addRecipeButton: {
 
-  },
-  displayBlock: {
-    marginBottom: 10,
 
-  },
-  recipeName: {
-
-  },
-  header: {
 
   }
-
 });
 
 
@@ -61,12 +55,19 @@ const styles = StyleSheet.create({
 
 const FoodDisplay = ({ recipes }) => {
   return (
+    <>
+    <View style={styles.topRightButton}>
+      <AddRecipeButton />
+    </View>
+    <View style={{flex: 1}}>
     <ScrollView style={styles.container}>
       <FoodCategoryBlock recipes={recipes} type="main" title="Main Courses" />
       <FoodCategoryBlock recipes={recipes} type="shake" title="Shakes" />
       <FoodCategoryBlock recipes={recipes} type="side" title="Sides" />
       <FoodCategoryBlock recipes={recipes} type="snack" title="Snacks" />
     </ScrollView>
+    </View>
+    </>
   )
 }
 
