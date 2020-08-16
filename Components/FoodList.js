@@ -11,16 +11,12 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     marginBottom: 70,
   },
-  topRightButton: {
+  topRight: {
     flex: 0,
     position: 'absolute',
     top: 60,
     right: 30,
-
   },
-  addRecipeButton: {
-
-  }
 });
 
 
@@ -28,7 +24,7 @@ const styles = StyleSheet.create({
 export default function FoodList({ recipes, setAdderDisplay }) {
   return (
     <>
-    <View style={styles.topRightButton}>
+    <View style={styles.topRight}>
       <AddRecipeButton onPress={() => setAdderDisplay(true)}/>
     </View>
     <View style={{flex: 1}}>

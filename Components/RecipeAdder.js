@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, View, Text, Button } from 'react-native';
 import RemoveIngredientButton from './Buttons/RemoveIngredientButton.js';
 import AddIngredientButton from './Buttons/AddIngredientButton.js';
 import EvaluateRecipeButton from './Buttons/EvaluateRecipeButton.js';
+import BackButton from './Buttons/BackButton.js';
 // import { RecipeModal, ItemModal } from './AdderModals.jsx';
 
 const styles = StyleSheet.create({
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
   itemEntryInput: {
     borderStyle: 'solid',
     borderColor: 'black',
+    borderWidth: 1,
 
   },
   ingredientLineWrapper: {
@@ -32,6 +34,12 @@ const styles = StyleSheet.create({
   header: {
 
   },
+  topLeft: {
+    flex: 0,
+    position: 'absolute',
+    top: 45,
+    left: 20,
+  },
   titleWrapper: {
 
   },
@@ -43,13 +51,13 @@ const styles = StyleSheet.create({
 const IngredientLine = ({ id, remove, onChange, value }) => {
   return (
     <View style={styles.ingredientLineWrapper}>
-      <TextInput style={styles.itemEntryInput} id={id} value={value} onChangeText={text => onChange(id, text)} />
+      <TextInput style={styles.itemEntryInput} onChangeText={text => onChange(id, text)} />
       <RemoveIngredientButton id={id} onPress={remove} />
     </View>
   )
 }
 
-const RecipeAdderHooked = () => {
+const RecipeAdderHooked = ({ setAdderDisplay }) => {
   const [ingredients, setIngredients] = useState([{ id: 0, value: '' }]);
   const [counter, setCounter] = useState(0);
   const [type, setType] = useState('side');
@@ -62,14 +70,14 @@ const RecipeAdderHooked = () => {
   // const [selectedFoodItem, setFood] = useState(itemNutrition.hints[0].food);
   const [addButtonText, setButtonText] = useState('Item');
 
-  const handleItemChange = (index) => {
-    setFood(itemNutrition.hints[index].food);
-  }
+  // const handleItemChange = (index) => {
+  //   setFood(itemNutrition.hints[index].food);
+  // }
 
   const handleIngredientChange = (id, value) => {
     const newIngredients = ingredients;
     const targetIndex = newIngredients.findIndex((ingredient) => {
-      return `entry${ ingredient.id }` === id;
+      return `entry${ingredient.id}` === id;
     })
     newIngredients[targetIndex].value = value;
     setIngredients(newIngredients);
@@ -90,7 +98,7 @@ const RecipeAdderHooked = () => {
 
   const removeIngredient = (id) => {
     const newIngredients = ingredients.filter((ingredient) => {
-      return `entry${ ingredient.id }` !== id;
+      return `entry${ingredient.id}` !== id;
     });
     let newAddButtonText = 'Recipe';
     if (newIngredients.length === 1) {
@@ -100,24 +108,35 @@ const RecipeAdderHooked = () => {
     setIngredients(newIngredients);
   }
 
-  return (
-    <View style={styles.container}>
-    <Text style={styles.header}>Add A Recipe or Item</Text>
-    {ingredients.map((ingredient) =>
-      <IngredientLine id={`entry${ ingredient.id }`} value={ingredient.value} onChange={handleIngredientChange} remove={removeIngredient} />
-    )}
+  const evaluate = () => {
+    console.log(ingredients);
 
-    <AddIngredientButton onPress={addIngredient}/>
-    <View style={styles.titleWrapper}>
-      <Text>Recipe/Item Title</Text>
-      <TextInput onChangeText={text => setTitle(text)} />
-    </View>
-    <Text>
-      Evaluate {addButtonText}
-    </Text>
-    <EvaluateRecipeButton />
-    {/* <EvaluateRecipeButton onPress={evaluateRecipe}/> */}
-    {/* <RecipeModal
+  }
+
+  return (
+    <>
+      <View style={styles.topLeft}>
+        <BackButton onPress={() => setAdderDisplay(false)} />
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.header}>Add A Recipe or Item</Text>
+        {ingredients.map((ingredient) =>
+          <IngredientLine key={ingredient.id} id={`entry${ingredient.id}`} onChange={handleIngredientChange} remove={removeIngredient} />
+        )}
+
+        <AddIngredientButton onPress={addIngredient} />
+        <View style={styles.titleWrapper}>
+          <Text>Recipe/Item Title</Text>
+          <TextInput onChangeText={text => setTitle(text)} />
+        </View>
+        <Text>
+          Evaluate {addButtonText}
+        </Text>
+        <EvaluateRecipeButton onPress={evaluate} />
+
+
+      {/* <EvaluateRecipeButton onPress={evaluateRecipe}/> */}
+      {/* <RecipeModal
       show={this.props.showAddRecipeModal}
       handleHide={this.props.handleHideRecipeModal}
       title={this.state.title}
@@ -126,7 +145,7 @@ const RecipeAdderHooked = () => {
       onSubmit={this.submitRecipe.bind(this)}
       recipes={this.props.recipes}
       /> */}
-    {/* <ItemModal
+      {/* <ItemModal
       show={this.props.showAddItemModal}
       handleHide={this.props.handleHideItemModal}
       title={this.state.title}
@@ -136,7 +155,8 @@ const RecipeAdderHooked = () => {
       selectedFoodItem={this.state.selectedFoodItem}
       submitItem={this.submitItem.bind(this)}
       /> */}
-  </View>
+    </View>
+    </>
 
   )
 
@@ -181,7 +201,7 @@ class RecipeAdder extends React.Component {
   onIngredientChange(event) {
     const ingredients = this.state.ingredients;
     const targetIndex = ingredients.findIndex((ingredient) => {
-      return `entry${ ingredient.id }` === event.target.id;
+      return `entry${ingredient.id}` === event.target.id;
     })
     ingredients[targetIndex].value = event.target.value;
     this.setState({ ingredients });
@@ -204,7 +224,7 @@ class RecipeAdder extends React.Component {
 
   removeIngredient(event) {
     const ingredients = this.state.ingredients.filter((ingredient) => {
-      return `entry${ ingredient.id }` !== event.target.id;
+      return `entry${ingredient.id}` !== event.target.id;
     });
     let addButtonText = 'Recipe';
     if (ingredients.length === 1) {
@@ -273,10 +293,10 @@ class RecipeAdder extends React.Component {
       <Wrapper show={this.props.show}>
         <Header>Add A Recipe or Item</Header>
         {this.state.ingredients.map((ingredient) =>
-          <IngredientLine id={`entry${ ingredient.id }`} value={ingredient.value} change={this.onIngredientChange.bind(this)} remove={this.removeIngredient.bind(this)} />
+          <IngredientLine id={`entry${ingredient.id}`} value={ingredient.value} change={this.onIngredientChange.bind(this)} remove={this.removeIngredient.bind(this)} />
         )}
         <div>
-        <AddIngredientButton onClick={this.addIngredient.bind(this)}>Add Ingredient</AddIngredientButton>
+          <AddIngredientButton onClick={this.addIngredient.bind(this)}>Add Ingredient</AddIngredientButton>
 
         </div>
         <br></br>
@@ -294,7 +314,7 @@ class RecipeAdder extends React.Component {
           nutrition={this.props.nutrition}
           onSubmit={this.submitRecipe.bind(this)}
           recipes={this.props.recipes}
-          />
+        />
         <ItemModal
           show={this.props.showAddItemModal}
           handleHide={this.props.handleHideItemModal}
@@ -304,7 +324,7 @@ class RecipeAdder extends React.Component {
           itemNutrition={this.props.itemNutrition}
           selectedFoodItem={this.state.selectedFoodItem}
           submitItem={this.submitItem.bind(this)}
-          />
+        />
       </Wrapper>
     )
   }

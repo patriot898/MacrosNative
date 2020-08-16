@@ -13,18 +13,6 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     marginBottom: 70,
   },
-  topRightButton: {
-    flex: 0,
-    position: 'absolute',
-    top: 60,
-    right: 30,
-
-  },
-  addRecipeButton: {
-
-
-
-  }
 });
 
 const FoodDisplay = ({ recipes }) => {
@@ -33,7 +21,7 @@ const FoodDisplay = ({ recipes }) => {
   return (
     <>
     {!showAdder && <FoodList recipes={recipes} setAdderDisplay={setAdderDisplay}/> }
-    {showAdder && <RecipeAdder />}
+    {showAdder && <RecipeAdder setAdderDisplay={setAdderDisplay}/>}
     </>
   )
 }
