@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Header } from 'react-native-elements';
-import AddRecipeButton from './AddRecipeButton.js';
+import AddRecipeButton from './Buttons/AddRecipeButton.js';
 
 const styles = StyleSheet.create({
   container: {

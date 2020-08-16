@@ -1,79 +1,145 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import Button from 'react-bootstrap/Button';
-import { RecipeModal, ItemModal } from './AdderModals.jsx';
+import React, { useState } from 'react';
+import { StyleSheet, TextInput, View, Text, Button } from 'react-native';
+import RemoveIngredientButton from './Buttons/RemoveIngredientButton.js';
+import AddIngredientButton from './Buttons/AddIngredientButton.js';
+import EvaluateRecipeButton from './Buttons/EvaluateRecipeButton.js';
+// import { RecipeModal, ItemModal } from './AdderModals.jsx';
 
-const Wrapper = styled.div`
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 0 18px rgba(0, 0, 0, .15);
-  width: 30em;
-  border: 1px solid #ccc;
-  padding: 1em;
-  margin-left: 3em;
-  display: ${ (props) => props.show ? 'inline-block' : 'none'} ;
-  vertical-align: top;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 5,
+    paddingRight: 5,
+    marginBottom: 70,
 
-`;
+  },
+  evaluateRecipeButton: {
 
-const AddIngredientButton = styled.button`
-  clear: both;
-  display: block;
-  border-radius: 4px;
-  box-shadow: 0 0 18px rgba(0, 0, 0, .15);
-  margin-top: 4px;
+  },
+  itemEntryInput: {
+    borderStyle: 'solid',
+    borderColor: 'black',
 
-`;
+  },
+  ingredientLineWrapper: {
+    marginBottom: 25,
+    flex: 0,
 
-const RemoveIngredientButton = styled(Button)`
-  display: ${ (props) => props.id === 'entry0' ? 'none' : 'block' };
-  float: left;
-  clear: right;
-  margin-top: 2px;
-`;
+  },
+  typeDropDown: {
 
-const ItemEntryInput = styled.input`
-  width: 20em;
-  float: left;
-  clear: ${ (props) => props.id === 'entry0' ? 'right' : 'none' };
-  height: 35px;
-`;
+  },
+  header: {
 
-const IngredientLineDiv = styled.div`
-  clear: right;
-  margin-bottom: 25x;
+  },
+  titleWrapper: {
 
-  `;
+  },
+  titleInput: {
+    height: 10,
+  }
+});
 
-const EvaluateRecipeButton = styled(Button)`
-  margin: auto;
-
-  `;
-
-const TypeDropdown = styled.select`
-
-  `;
-
-const Header = styled.h2`
-
-  `;
-
-const TitleDiv = styled.div`
-
-  `;
-
-const TitleInput = styled.input`
-  height: 38px;
-
-  `;
-
-const IngredientLine = (props) => {
+const IngredientLine = ({ id, remove, onChange, value }) => {
   return (
-    <IngredientLineDiv>
-      <ItemEntryInput id={props.id} value={props.value} onChange={props.change} />
-      <RemoveIngredientButton varient="danger" className="btn-danger" size="sm" id={props.id} onClick={props.remove}>Remove</RemoveIngredientButton>
-    </IngredientLineDiv>
+    <View style={styles.ingredientLineWrapper}>
+      <TextInput style={styles.itemEntryInput} id={id} value={value} onChangeText={text => onChange(id, text)} />
+      <RemoveIngredientButton id={id} onPress={remove} />
+    </View>
   )
+}
+
+const RecipeAdderHooked = () => {
+  const [ingredients, setIngredients] = useState([{ id: 0, value: '' }]);
+  const [counter, setCounter] = useState(0);
+  const [type, setType] = useState('side');
+  const [group, setGroup] = useState('none');
+  const [title, setTitle] = useState('');
+  const [pair, setPair] = useState('none');
+  const [meal, setMeal] = useState('any');
+  const [servings, setServings] = useState(1);
+  const [defaultServings, setDefaultServings] = useState('1');
+  // const [selectedFoodItem, setFood] = useState(itemNutrition.hints[0].food);
+  const [addButtonText, setButtonText] = useState('Item');
+
+  const handleItemChange = (index) => {
+    setFood(itemNutrition.hints[index].food);
+  }
+
+  const handleIngredientChange = (id, value) => {
+    const newIngredients = ingredients;
+    const targetIndex = newIngredients.findIndex((ingredient) => {
+      return `entry${ ingredient.id }` === id;
+    })
+    newIngredients[targetIndex].value = value;
+    setIngredients(newIngredients);
+  }
+
+  const addIngredient = () => {
+    const newCount = counter + 1;
+    const newIngredient = {
+      id: newCount,
+      value: ''
+    }
+    const newIngredients = ingredients;
+    newIngredients.push(newIngredient);
+    setIngredients(newIngredients);
+    setButtonText('Recipe');
+    setCounter(newCount);
+  }
+
+  const removeIngredient = (id) => {
+    const newIngredients = ingredients.filter((ingredient) => {
+      return `entry${ ingredient.id }` !== id;
+    });
+    let newAddButtonText = 'Recipe';
+    if (newIngredients.length === 1) {
+      newAddButtonText = 'Item';
+    }
+    setButtonText(newAddButtonText);
+    setIngredients(newIngredients);
+  }
+
+  return (
+    <View style={styles.container}>
+    <Text style={styles.header}>Add A Recipe or Item</Text>
+    {ingredients.map((ingredient) =>
+      <IngredientLine id={`entry${ ingredient.id }`} value={ingredient.value} onChange={handleIngredientChange} remove={removeIngredient} />
+    )}
+
+    <AddIngredientButton onPress={addIngredient}/>
+    <View style={styles.titleWrapper}>
+      <Text>Recipe/Item Title</Text>
+      <TextInput onChangeText={text => setTitle(text)} />
+    </View>
+    <Text>
+      Evaluate {addButtonText}
+    </Text>
+    <EvaluateRecipeButton />
+    {/* <EvaluateRecipeButton onPress={evaluateRecipe}/> */}
+    {/* <RecipeModal
+      show={this.props.showAddRecipeModal}
+      handleHide={this.props.handleHideRecipeModal}
+      title={this.state.title}
+      handleChange={this.handleChange.bind(this)}
+      nutrition={this.props.nutrition}
+      onSubmit={this.submitRecipe.bind(this)}
+      recipes={this.props.recipes}
+      /> */}
+    {/* <ItemModal
+      show={this.props.showAddItemModal}
+      handleHide={this.props.handleHideItemModal}
+      title={this.state.title}
+      handleChange={this.handleChange.bind(this)}
+      handleItemChange={this.handleItemChange.bind(this)}
+      itemNutrition={this.props.itemNutrition}
+      selectedFoodItem={this.state.selectedFoodItem}
+      submitItem={this.submitItem.bind(this)}
+      /> */}
+  </View>
+
+  )
+
 }
 
 class RecipeAdder extends React.Component {
@@ -244,4 +310,4 @@ class RecipeAdder extends React.Component {
   }
 }
 
-export default RecipeAdder;
+export default RecipeAdderHooked;
