@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
   }
 })
 
-const TopBar = () => {
+const TopBar = ({ title }) => {
   return (
     <Header
-      centerComponent={{ text: 'Macros' }}
+      centerComponent={{ text: title }}
       backgroundColor='white'
       containerStyle={styles.container}
     />

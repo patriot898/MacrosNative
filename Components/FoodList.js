@@ -21,11 +21,18 @@ const styles = StyleSheet.create({
 
 
 
-export default function FoodList({ recipes, setAdderDisplay, setToolbar }) {
+export default function FoodList({ recipes, setAdderDisplay, setToolbar, setHeader }) {
+  const onPressAddRecipe = () => {
+    setAdderDisplay(true);
+    setToolbar(false);
+    setHeader('Add a Recipe');
+
+  }
+
   return (
     <>
     <View style={styles.topRight}>
-      <AddRecipeButton onPress={() => {setAdderDisplay(true); setToolbar(false)}}/>
+      <AddRecipeButton onPress={onPressAddRecipe}/>
     </View>
     <View style={{flex: 1}}>
     <ScrollView style={styles.container}>

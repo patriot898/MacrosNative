@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const FoodDisplay = ({ recipes, setToolbar }) => {
+const FoodDisplay = ({ recipes, setToolbar, setHeader }) => {
   const [showAdder, setAdderDisplay] = useState(false);
 
   return (
     <>
-    {!showAdder && <FoodList recipes={recipes} setAdderDisplay={setAdderDisplay} setToolbar={setToolbar} /> }
-    {showAdder && <RecipeAdder setAdderDisplay={setAdderDisplay} setToolbar={setToolbar}/>}
+    {!showAdder && <FoodList recipes={recipes} setAdderDisplay={setAdderDisplay} setToolbar={setToolbar} setHeader={setHeader}/> }
+    {showAdder && <RecipeAdder setAdderDisplay={setAdderDisplay} setToolbar={setToolbar} setHeader={setHeader}/>}
     </>
   )
 }

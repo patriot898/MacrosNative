@@ -39,17 +39,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function Toolbar({ selected, setSelected }) {
+export default function Toolbar({ selected, setSelected, setHeader }) {
   return (
       <View style={styles.toolbar}>
         <View style={styles.iconWrapper}>
-          <Icon iconStyle={selected === 0 ? styles.selected : styles.unselected} name="th-list" type="font-awesome-5" onPress={() => setSelected(0)} />
+          <Icon iconStyle={selected === 0 ? styles.selected : styles.unselected} name="th-list" type="font-awesome-5" onPress={() => {setSelected(0); setHeader('Meal Plans')}} />
         </View>
         <View style={styles.iconWrapper}>
-          <Icon iconStyle={selected === 1 ? styles.selected : styles.unselected} name="calculator" type="font-awesome-5" onPress={() => setSelected(1)}/>
+          <Icon iconStyle={selected === 1 ? styles.selected : styles.unselected} name="calculator" type="font-awesome-5" onPress={() => {setSelected(1); setHeader('Calculator')}}/>
         </View>
         <View style={styles.iconWrapper}>
-          <Icon iconStyle={selected === 2 ? styles.selected : styles.unselected} name="apple-alt" type="font-awesome-5" onPress={() => setSelected(2)}/>
+          <Icon iconStyle={selected === 2 ? styles.selected : styles.unselected} name="apple-alt" type="font-awesome-5" onPress={() => {setSelected(2); setHeader('Your Collection')}}/>
         </View>
       </View>
 
