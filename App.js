@@ -10,14 +10,15 @@ import TopBar from './Components/TopBar.js';
 export default function App() {
 
   const [selected, setSelected] = useState(2);
+  const [showToolbar, setToolbar] = useState(true);
 
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <TopBar />
         {(selected === 1) && <TdeeCalculator />}
-        {(selected === 2) && <FoodDisplay recipes={recipes} />}
-      <Toolbar selected={selected} setSelected={setSelected} />
+        {(selected === 2) && <FoodDisplay recipes={recipes} setToolbar={setToolbar}/>}
+      {showToolbar && <Toolbar selected={selected} setSelected={setSelected} />}
     </View>
   );
 }

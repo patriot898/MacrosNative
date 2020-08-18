@@ -57,7 +57,7 @@ const IngredientLine = ({ id, remove, onChange, value }) => {
   )
 }
 
-const RecipeAdderHooked = ({ setAdderDisplay }) => {
+const RecipeAdderHooked = ({ setAdderDisplay, setToolbar }) => {
   const [ingredients, setIngredients] = useState([{ id: 0, value: '' }]);
   const [counter, setCounter] = useState(0);
   const [type, setType] = useState('side');
@@ -116,7 +116,7 @@ const RecipeAdderHooked = ({ setAdderDisplay }) => {
   return (
     <>
       <View style={styles.topLeft}>
-        <BackButton onPress={() => setAdderDisplay(false)} />
+        <BackButton onPress={() => {setAdderDisplay(false); setToolbar(true)}} />
       </View>
       <View style={styles.container}>
         <Text style={styles.header}>Add A Recipe or Item</Text>
